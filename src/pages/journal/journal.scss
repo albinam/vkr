@@ -1,0 +1,36 @@
+@import "../../styles/vars";
+
+.journal{
+
+  &_info{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+    &_box{
+      background-color: $color-secondary-blue;
+      width: 60%;
+      text-align: center;
+      margin: 5% 0 32px 0;
+    }
+    &_button {
+      text-align: center;
+      width: 200px;
+      height: 32px;
+      color: $color-main-blue;
+      background-color: $color-white;
+      border: $color-main-blue 1px solid;
+      margin: 32px;
+
+      &:hover {
+        color: $color-white;
+        background-color: $color-main-blue;
+        transition: all 0.4s ease;
+      }
+    }
+    &_code-label{
+      margin: 16px 0 16px 0;
+    }
+  }
+}

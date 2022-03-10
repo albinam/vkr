@@ -1,0 +1,18 @@
+@import "../../styles/vars";
+.student-line{
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  background-color: $color-white;
+  border: $color-main-blue 1px solid;
+  width:60%;
+
+  &_id{
+    margin:0 16px  0 16px;
+  }
+
+  &_input{
+    width: 150px;
+    margin-left: auto;
+  }
+}
