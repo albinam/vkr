@@ -26,8 +26,8 @@ function Selection({placeholder, handleChange, values, value, label}) {
                     option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                 }>
                 {values.map((item, index) => (
-                    <Option key={index} value={item}>
-                        {item}
+                    <Option key={index} value={JSON.stringify(item)}>
+                        {item.name}
                     </Option>
                 ))}
             </Select>
