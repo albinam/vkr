@@ -34,3 +34,27 @@ export function setVedomost(vedomost) {
         payload: vedomost
     }
 }
+export function setGrades(grades) {
+    return {
+        type: 'SET_GRADES',
+        payload: grades
+    }
+}
+export function setGroup(group) {
+    return {
+        type: 'SET_GROUP',
+        payload: group
+    }
+}
+export function setGroups(groups) {
+    return {
+        type: 'SET_GROUPS',
+        payload: groups
+    }
+}
+export function setFiltered(filteredVedomosti) {
+    return {
+        type: 'SET_FILTERED',
+        payload: filteredVedomosti
+    }
+}

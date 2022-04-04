@@ -1,7 +1,7 @@
 import React from 'react';
 import {Select} from 'antd';
 import PropTypes from 'prop-types';
-import './selection.scss';
+import './selection.css';
 
 const {Option} = Select;
 
@@ -22,6 +22,7 @@ function Selection({placeholder, handleChange, values, value, label}) {
                 onChange={handleChangeInputValue}
                 optionFilterProp="children"
                 className="selection_input"
+                notFoundContent="Информация не найдена"
                 filterOption={(input, option) =>
                     option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                 }>

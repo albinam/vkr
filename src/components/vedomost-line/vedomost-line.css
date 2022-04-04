@@ -1,0 +1,8 @@
+.vedomost_line_container{
+    padding:0 0 0 16px ;
+    text-align: center;
+
+}
+.vedomost_line{
+    border: #d9d9d9 0.5px solid;
+}

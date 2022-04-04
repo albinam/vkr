@@ -1,5 +1,5 @@
 const initialState = {
-    teacherId:"000002635"
+    teacherId:"000004406"
 }
 export default function teacherReducer(state = initialState, action) {
     switch (action.type) {

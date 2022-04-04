@@ -1,0 +1,21 @@
+
+.student-line {
+    background-color: #ffffff;
+    border: #004891 1px solid;
+    width: 60%;
+    color: #000000;
+}
+
+.student-line_record-book {
+    width: 90px;
+    padding-left: 16px;
+}
+
+.student-line_group{
+    text-align: center;
+}
+
+.student-line_input {
+    width: 200px;
+    margin-left: auto;
+}

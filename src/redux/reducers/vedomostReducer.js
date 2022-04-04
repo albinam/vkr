@@ -1,8 +1,10 @@
 const initialState = {
     vedomosti:[],
-    vedomost:null
+    vedomost:null,
+    grades:[],
+    filteredVedomosti:[]
 }
-export default function yearsReducer(state = initialState, action) {
+export default function vedomostReducer(state = initialState, action) {
     switch (action.type) {
         case 'SET_VEDOMOSTI':
             return {
@@ -13,6 +15,16 @@ export default function yearsReducer(state = initialState, action) {
             return {
                 ...state,
                 vedomost:action.payload
+            };
+        case 'SET_GRADES':
+            return {
+                ...state,
+                grades:action.payload
+            };
+        case 'SET_FILTERED':
+            return {
+                ...state,
+                filteredVedomosti:action.payload
             };
         default:
             return state;

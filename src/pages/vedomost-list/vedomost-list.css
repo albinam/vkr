@@ -1,0 +1,69 @@
+.vedomost-list_container {
+    height: 100vh;
+}
+
+.vedomost-list_table {
+    width: 80%;
+    background: #ffffff;
+    font-size: 1rem;
+    margin: 32px auto;
+}
+
+.vedomost-list_table_info {
+    height: 60px;
+    background: #004891;
+    color: #ffffff;
+    text-align: center;
+    border: #004891 1px solid;
+}
+
+.vedomost-list_info {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1rem;
+}
+
+.vedomost-list_info_box {
+    background-color: #d9d9d9;
+    width: 30%;
+    padding: 16px;
+    margin-top: 32px;
+}
+
+.vedomost-list_info_line {
+    display: flex;
+    flex-direction: row;
+}
+
+.vedomost-list_info_line_title {
+    font-weight: bold;
+}
+
+.vedomost-list_info_line_text {
+    margin-left: 8px;
+}
+
+.vedomost-list_search {
+    font-size: 1rem;
+    margin: 16px 0 16px 10%;
+}
+
+.vedomost-list_search_label {
+    margin-bottom: 8px;
+}
+
+.vedomost-list_search_group {
+    display: flex;
+    flex-direction: row;
+}
+
+.vedomost-list_search_button {
+    margin-left: 8px;
+    width: 150px;
+    font-size: 14px;
+    background-color: #004891;
+    color: #ffffff;
+    border: none;
+}
