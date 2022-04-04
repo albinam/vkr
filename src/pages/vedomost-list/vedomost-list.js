@@ -7,6 +7,7 @@ import {useHistory} from "react-router-dom";
 import Loader from "../../components/loader/loader";
 import {setFiltered, setGroup, setGroups, setVedomost} from "../../redux/actions/actions";
 import {Select} from "antd";
+
 const {Option} = Select;
 
 function Vedomost() {
@@ -25,8 +26,13 @@ function Vedomost() {
     }
 
     const handleClickGroup = (value) => {
-        dispatch(setGroup(value));
-        let newVedomosti = vedomosti.filter(ved => ved.groupName === value);
+        let newVedomosti = vedomosti.filter(function (record) {
+            let groupsArr = [];
+            record.group.map(item => {
+                groupsArr.push(item.groupName);
+            })
+            return groupsArr.includes(value)
+        });
         dispatch(setFiltered(newVedomosti));
     }
 
@@ -35,18 +41,27 @@ function Vedomost() {
         dispatch(setGroup());
     }
 
+    const groupsToString = (value) => {
+        let groupsString = "";
+        value.map(item => {
+            groupsString = groupsString + item.groupName + ", ";
+        })
+        return groupsString.substr(0, groupsString.length - 2);
+    }
+
     useEffect(() => {
         setLoading(true);
         if (vedomosti.length === 0) {
             dispatch(getVedomosti(params.get("yearId"), teacher, params.get("disciplineId")));
-        }
-        else {
+        } else {
             if (groups.length === 0) {
                 const groups = [];
                 vedomosti.map((item) => {
-                    if (item.groupName && !groups.includes(item.groupName)) {
-                        groups.push(item.groupName);
-                    }
+                    item.group.map((group) => {
+                        if (group.groupName && !groups.includes(group.groupName)) {
+                            groups.push(group.groupName);
+                        }
+                    })
                 })
                 dispatch(setGroups(groups));
             }
@@ -65,31 +80,32 @@ function Vedomost() {
                             </div>
                             <div className="vedomost-list_info_line">
                                 <div className="vedomost-list_info_line_title">Дисциплина:</div>
-                                <div className="vedomost-list_info_line_text">{filteredVedomosti[0].disciplineName}</div>
+                                <div
+                                    className="vedomost-list_info_line_text">{filteredVedomosti[0].disciplineName}</div>
                             </div>
                         </div>
                     </div>
                     <div className="vedomost-list_search">
                         <div className="vedomost-list_search_label">Поиск по группе</div>
                         <div className="vedomost-list_search_group">
-                        <Select
-                            showSearch
-                            placeholder="Выберите учебную группу"
-                            value={group}
-                            onChange={handleClickGroup}
-                            optionFilterProp="children"
-                            className="vedomost-list_search_filter"
-                            notFoundContent="Информация не найдена"
-                            filterOption={(input, option) =>
-                                option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                            }>
-                            {groups.map((item, index) => (
-                                <Option key={index} value={item}>
-                                    {item}
-                                </Option>
-                            ))}
-                        </Select>
-                        <button className="vedomost-list_search_button" onClick={removeFilter}>Сбросить</button>
+                            <Select
+                                showSearch
+                                placeholder="Выберите учебную группу"
+                                value={group}
+                                onChange={handleClickGroup}
+                                optionFilterProp="children"
+                                className="vedomost-list_search_filter"
+                                notFoundContent="Информация не найдена"
+                                filterOption={(input, option) =>
+                                    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                }>
+                                {groups.map((item, index) => (
+                                    <Option key={index} value={item}>
+                                        {item}
+                                    </Option>
+                                ))}
+                            </Select>
+                            <button className="vedomost-list_search_button" onClick={removeFilter}>Сбросить</button>
                         </div>
                     </div>
                     <table className="vedomost-list_table">
@@ -108,7 +124,7 @@ function Vedomost() {
                         {filteredVedomosti.map((item, index) => (
                             <VedomostLine key={index} date={item.vedomostDate}
                                           vedomostId={item.vedomostId} status={item.status}
-                                          typeOfControl={item.typeOfControl} group={item.groupName}
+                                          typeOfControl={item.typeOfControl} group={groupsToString(item.group)}
                                           semester={item.semesterName}
                                           handleClick={() => handleClick(item.vedomostId)}/>
                         ))}
