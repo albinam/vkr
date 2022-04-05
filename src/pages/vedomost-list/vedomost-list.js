@@ -26,6 +26,7 @@ function Vedomost() {
     }
 
     const handleClickGroup = (value) => {
+        dispatch(setGroup(value));
         let newVedomosti = vedomosti.filter(function (record) {
             let groupsArr = [];
             record.group.map(item => {
