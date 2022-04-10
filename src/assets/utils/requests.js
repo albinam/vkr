@@ -2,39 +2,17 @@ import axios from "axios";
 import {setDisciplines, setFiltered, setGrades, setVedomost, setVedomosti, setYears} from "../../redux/actions/actions";
 import {errorCatch} from "./error";
 
-const token = "Администратор:123";
-
-function b64EncodeUnicode(str) {
-    return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,
-        function toSolidBytes(match, p1) {
-            return String.fromCharCode('0x' + p1);
-        }));
-}
-
-let encodedAuth = b64EncodeUnicode(token);
+const token = "admin:dP7yEO";
+let encodedAuth = btoa(token);
 
 const myAxios = axios.create({
     baseURL: 'http://localhost:5000/api',
     headers: {
         'Content-Type': 'application/json',
         'Authorization': `Basic ${encodedAuth}`,
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'origin, content-type, authorization',
-        'Access-Control-Allow-Methods': 'PUT, GET, POST, DELETE, OPTIONS',
-        'Access-Control-Allow-Credentials': true
+        'Access-Control-Allow-Origin': '*'
     },
 });
-// const myAxios2 = axios.create({
-//     baseURL: 'http://localhost/vkr/hs/Ulstu_Vedomosti/v1',
-//     headers: {
-//         'Content-Type': 'application/json',
-//         'Authorization': `Basic ${encodedAuth}`,
-//         'Access-Control-Allow-Origin': '*',
-//         'Access-Control-Allow-Headers': 'origin, content-type, authorization',
-//         'Access-Control-Allow-Methods': 'PUT, GET, POST, DELETE, OPTIONS',
-//         'Access-Control-Allow-Credentials': true
-//     },
-// });
 
 export const getYears = () => {
     return (dispatch) => {
