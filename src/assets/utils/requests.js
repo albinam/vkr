@@ -14,7 +14,7 @@ function b64EncodeUnicode(str) {
 let encodedAuth = b64EncodeUnicode(token);
 
 const myAxios = axios.create({
-    baseURL: 'http://localhost/vkr/hs/Ulstu_Vedomosti/v1',
+    baseURL: 'http://localhost:5000/api',
     headers: {
         'Content-Type': 'application/json',
         'Authorization': `Basic ${encodedAuth}`,
@@ -24,20 +24,23 @@ const myAxios = axios.create({
         'Access-Control-Allow-Credentials': true
     },
 });
+// const myAxios2 = axios.create({
+//     baseURL: 'http://localhost/vkr/hs/Ulstu_Vedomosti/v1',
+//     headers: {
+//         'Content-Type': 'application/json',
+//         'Authorization': `Basic ${encodedAuth}`,
+//         'Access-Control-Allow-Origin': '*',
+//         'Access-Control-Allow-Headers': 'origin, content-type, authorization',
+//         'Access-Control-Allow-Methods': 'PUT, GET, POST, DELETE, OPTIONS',
+//         'Access-Control-Allow-Credentials': true
+//     },
+// });
 
 export const getYears = () => {
     return (dispatch) => {
-        myAxios.get('/GetYears')
+        myAxios.get('/getYears')
             .then((resp) => {
-                const years = [];
-                var date = new Date;
-                resp.data.yearsList.map(item => {
-                    let arr = item.name.split(' - ');
-                    if ((parseInt(arr[1]) - parseInt(arr[0])) === 1 && (parseInt(arr[1]) <= date.getFullYear())) {
-                        years.push(item);
-                    }
-                })
-                dispatch(setYears(years));
+                dispatch(setYears(resp.data));
             })
             .catch(function (error) {
                     errorCatch(error);
@@ -48,9 +51,9 @@ export const getYears = () => {
 
 export const getDisciplines = (yearId, teacherId) => {
     return (dispatch) => {
-        myAxios.get(`/GetDisciplines?teacherId=${teacherId}&yearId=${yearId}`)
+        myAxios.get(`/getDisciplines/${teacherId}&${yearId}`)
             .then((resp) => {
-                dispatch(setDisciplines(resp.data.disciplinesList));
+                dispatch(setDisciplines(resp.data));
             })
             .catch(function (error) {
                     errorCatch(error);
@@ -60,10 +63,10 @@ export const getDisciplines = (yearId, teacherId) => {
 }
 export const getVedomosti = (yearId, teacherId, disciplineId) => {
     return (dispatch) => {
-        myAxios.get(`/GetVedomosti?teacherId=${teacherId}&yearId=${yearId}&disciplineId=${disciplineId}`)
+        myAxios.get(`/getVedomosti/${teacherId}&${yearId}&${disciplineId}`)
             .then((resp) => {
-                dispatch(setVedomosti(resp.data.vedomostList));
-                dispatch(setFiltered(resp.data.vedomostList));
+                dispatch(setVedomosti(resp.data));
+                dispatch(setFiltered(resp.data));
             })
             .catch(function (error) {
                     errorCatch(error);
@@ -73,9 +76,9 @@ export const getVedomosti = (yearId, teacherId, disciplineId) => {
 }
 export const getVedomost = (vedosmostId) => {
     return (dispatch) => {
-        myAxios.get(`/GetVedomost?vedomostId=${vedosmostId}`)
+        myAxios.get(`/getVedomost/${vedosmostId}`)
             .then((resp) => {
-                dispatch(setVedomost(resp.data.vedomost[0]));
+                dispatch(setVedomost(resp.data));
             })
             .catch(function (error) {
                     errorCatch(error);
@@ -85,9 +88,9 @@ export const getVedomost = (vedosmostId) => {
 }
 export const getGrades = (gradesSystemId) => {
     return (dispatch) => {
-        myAxios.get(`/GetGrades?gradesSystemId=${gradesSystemId}`)
+        myAxios.get(`/getGrades/${gradesSystemId}`)
             .then((resp) => {
-                dispatch(setGrades(resp.data.gradesList));
+                dispatch(setGrades(resp.data));
             })
             .catch(function (error) {
                     errorCatch(error);
@@ -99,7 +102,7 @@ export const getGrades = (gradesSystemId) => {
 export const downloadVed = (vedomostId) => {
     myAxios({
         url:
-            `/VedomostToPdf?vedomostId=${vedomostId}`,
+            `/vedomostToPdf/${vedomostId}`,
         method: "GET",
         responseType: "blob"
     })
@@ -117,8 +120,9 @@ export const downloadVed = (vedomostId) => {
         )
 }
 
+
 export const postVedomost = (vedomost, vedomostId) => {
-    return myAxios.post(`/PostVedomost?vedomostId=${vedomostId}`, vedomost).then(() => {
+    return myAxios.post(`/postVedomost/${vedomostId}`, vedomost).then(() => {
         return true;
     })
         .catch(function (error) {
